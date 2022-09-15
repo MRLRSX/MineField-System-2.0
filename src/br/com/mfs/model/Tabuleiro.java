@@ -24,7 +24,10 @@ public class Tabuleiro implements CampoObservador {
 		associarVizinhos();
 		sortearMinas();
 	}
-
+ 
+	public void paraCada(Consumer<Campo> funcao) {
+		campos.forEach(funcao);
+	}
 	public void registrarObservador(Consumer<Boolean> observador) {
 		observadores.add(observador);
 	}
@@ -96,5 +99,14 @@ public class Tabuleiro implements CampoObservador {
 		}
 
 	}
+
+	public Integer getLinhas() {
+		return linhas;
+	}
+
+	public Integer getColunas() {
+		return colunas;
+	}
+	
 
 }
