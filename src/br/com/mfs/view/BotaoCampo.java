@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 import br.com.mfs.model.Campo;
 import br.com.mfs.model.CampoObservador;
@@ -26,6 +27,7 @@ public class BotaoCampo extends JButton implements CampoObservador, MouseListene
 		setBackground(BG_PADRAO);
 		setBorder(BorderFactory.createBevelBorder(0));
 		addMouseListener(this);
+		setOpaque(true);
 		campo.registrarObservador(this);
 	}
 
@@ -46,25 +48,39 @@ public class BotaoCampo extends JButton implements CampoObservador, MouseListene
 			aplicarEstiloDefault();
 			break;
 		}
+		SwingUtilities.invokeLater(()->{
+			repaint();
+			validate();
+		});
 	}
 
 	private void aplicarEstiloDefault() {
-		// TODO Auto-generated method stub
-		
+		setBackground(BG_PADRAO);
+		setBorder(BorderFactory.createBevelBorder(0));
+        setText("");		
 	}
 
 
 	private void aplicarEstiloExplodir() {
-		// TODO Auto-generated method stub
-
+		setBackground(BG_EXPLOSÃO);
+		setForeground(Color.WHITE);
+        setText("X");
 	}
 
 	private void aplicarEstiloMarcar() {
-		// TODO Auto-generated method stub
+		setBackground(BG_MARCADO);
+		setForeground(Color.BLACK);
+		setText("M");
 
 	}
 
 	private void aplicarEstiloAbrir() {
+		
+		if(campo.isMinado()) {
+			setBackground(BG_EXPLOSÃO);
+			return;
+		}
+		
 		setBackground(BG_PADRAO);
 		setBorder(BorderFactory.createLineBorder(BG_PADRAO));
 		
